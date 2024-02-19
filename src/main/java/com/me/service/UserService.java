@@ -1,7 +1,7 @@
 package com.me.service;
 
 
-import com.me.Entity.User;
+import com.me.entity.User;
 
 public interface UserService {
     User login(User user);

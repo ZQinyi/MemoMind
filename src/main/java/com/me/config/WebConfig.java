@@ -4,6 +4,7 @@ import com.me.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -16,4 +17,9 @@ public class WebConfig implements WebMvcConfigurer {
         //registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/login.html");
     }
 
+    // 通过这个方法让 spring 可以加载静态资源
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry){
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+    }
 }

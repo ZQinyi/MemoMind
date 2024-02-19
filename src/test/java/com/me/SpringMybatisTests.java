@@ -1,6 +1,6 @@
 package com.me;
 
-import com.me.Entity.User;
+import com.me.entity.User;
 import com.me.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class SpringMybatisTests {
     @Test
     public void testUpdate() {
         User user = new User();
-        user.setId(1L);
+        user.setId(1);
         user.setUsername("wahaha");
         user.setPassword("s");
         user.setEmail("zqwqdd");

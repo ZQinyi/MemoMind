@@ -1,8 +1,8 @@
 package com.me.controller;
 
 
-import com.me.Entity.Result;
-import com.me.Entity.User;
+import com.me.entity.Result;
+import com.me.entity.User;
 import com.me.service.UserService;
 import com.me.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.me.service.impl;
 
-import com.me.Entity.Note;
+import com.me.entity.Note;
 import com.me.mapper.NoteMapper;
 import com.me.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
