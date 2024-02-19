@@ -1,36 +1,59 @@
-// login.js
-
-function handleLoginSubmit(username, password) {
-    fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-    })
-        .then(response => response.json())
-        .then(data => {
-            if(data.success) {
-                // 服务器响应包含JWT
-                localStorage.setItem('jwt', data.data); // 假设JWT在响应的data字段中
-                // 跳转到主页或其他页面
-                window.location.href = '/home.html';
-            } else {
-                alert('Invalid Username or Password');
-            }
-        }).catch(error => {
-        console.error('Login Error:', error);
-        alert('Login Error');
-    });
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // 阻止表单默认提交行为
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            handleLoginSubmit(username, password);
-        });
-    }
+    const errorMessageDiv = document.getElementById('errorMessage');
+
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // 读取用户名和密码
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // 创建要发送的数据对象
+        const data = { username, password };
+
+        // 发送请求到后端登录接口
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 1) {
+                    console.log('Login successful:', data);
+                    // 保存token到localStorage
+                    localStorage.setItem('token', data.data);
+
+                    // 解析JWT获取userId
+                    const userId = parseJwt(data.data).id;
+
+                    // 跳转到对应的用户笔记页面
+                    window.location.href = `/${userId}`;
+                } else {
+                    errorMessageDiv.textContent = 'Login failed: ' + (data.msg || 'Invalid Username or Password');
+                    errorMessageDiv.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Login Error:', error);
+                errorMessageDiv.textContent = 'Login error';
+                errorMessageDiv.style.display = 'block';
+            });
+    });
 });
+
+// Parse JWT
+function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
 

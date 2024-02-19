@@ -20,11 +20,13 @@ spring:
       max-request-size: 100MB
 
   thymeleaf:
-    prefix:classpath:/templates/
-    suffix:.html
-    mode:HTML
-    encoding:UTF-8
-    cache:false # 开发时关闭缓存，方便调试
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false # 开发时关闭缓存，方便调试
+    enabled: true
+
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -33,5 +35,6 @@ mybatis:
 logging:
   level:
     org.springframework.jdbc.support.jdbcTransactionManager: debug
+
 
 

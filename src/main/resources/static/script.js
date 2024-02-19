@@ -1,21 +1,28 @@
-// 解析URL路径以获取userId
-function getUserIdFromPath() {
-    const pathArray = window.location.pathname.split('/').filter(Boolean);
-    const notesIndex = pathArray.indexOf('notes');
-    if (notesIndex > 0) {
-        return pathArray[notesIndex - 1]; // 假设userId位于'notes'之前
-    } else {
-        return null; // 如果没有找到符合条件的userId，返回null
-    }
+// Debounce function to prevent excessive executions
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            func.apply(this, args);
+        }, wait);
+    };
 }
 
-// 获取笔记
+// Fetch user ID from the data attribute
+function getUserIdFromPath() {
+    const userId = document.getElementById('memoApp').getAttribute('data-userid');
+    console.log("Fetched userId:", userId); // Debug output
+    return userId;
+}
+
+// Fetch and display notes for the user
 function fetchNotes(userId) {
     fetch(`http://localhost:8080/${userId}/notes`)
         .then(response => response.json())
         .then(result => {
             const sidebar = document.getElementById('sidebar');
-            sidebar.innerHTML = '<div class="sidebar-header">Notes List<button id="addNoteBtn">+</button></div>';
+            sidebar.innerHTML = '<div class="sidebar-header">MemoMind<button id="addNoteBtn">+</button></div>';
             result.data.forEach(note => {
                 const noteElement = document.createElement('div');
                 noteElement.className = 'note-item';
@@ -25,16 +32,25 @@ function fetchNotes(userId) {
                 `;
                 sidebar.appendChild(noteElement);
 
-                // 添加点击事件监听器到笔记标题
+                // Apply debounce to auto-save functionality
                 noteElement.querySelector('.note-title').addEventListener('click', function() {
                     const contentArea = document.getElementById('content');
-                    contentArea.innerHTML = `<h2>${note.title}</h2><p>${note.content}</p>`;
+                    contentArea.innerHTML = `
+                        <input id="editTitle" class="editTitle" value="${note.title}" />
+                        <textarea id="editContent" class="editable">${note.content}</textarea>
+                    `;
+                    document.getElementById('editTitle').addEventListener('input', debounce(() => autoSave(note.id, userId), 2000));
+                    document.getElementById('editContent').addEventListener('input', debounce(() => autoSave(note.id, userId), 2000));
                 });
             });
+
+            // Event listener for adding a new note
+            const addNoteBtn = document.getElementById('addNoteBtn');
+            addNoteBtn.addEventListener('click', () => addNote(userId));
         });
 }
 
-// 添加笔记
+// Add a new note
 function addNote(userId) {
     const defaultNote = {
         title: "New Note",
@@ -43,32 +59,53 @@ function addNote(userId) {
 
     fetch(`http://localhost:8080/${userId}/notes`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify(defaultNote)
     }).then(() => {
-        fetchNotes(userId); // 重新加载笔记
+        fetchNotes(userId); // Reload notes after adding
     });
 }
 
-// 删除笔记
+// Delete a note
 function deleteNote(noteId, userId) {
-    fetch(`http://localhost:8080/${userId}/notes/${noteId}`, { method: 'DELETE' })
-        .then(() => {
-            fetchNotes(userId); // 重新加载笔记
-        });
+    fetch(`http://localhost:8080/${userId}/notes/${noteId}`, {
+        method: 'DELETE'
+    }).then(() => {
+        fetchNotes(userId); // Reload notes after deleting
+    });
 }
 
-// DOM加载完成后执行
-document.addEventListener('DOMContentLoaded', function() {
+// Auto-save note changes
+function autoSave(noteId, userId) {
+    const title = document.getElementById('editTitle') ? document.getElementById('editTitle').value : '';
+    const content = document.getElementById('editContent') ? document.getElementById('editContent').value : '';
+    saveNoteChanges(noteId, userId, title, content);
+}
+
+// Save changes to a note
+function saveNoteChanges(noteId, userId, title, content) {
+    fetch(`http://localhost:8080/${userId}/notes`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: noteId, user_id: userId, title: title, content: content })
+    }).then(() => {
+        fetchNotes(userId); // Refresh notes to reflect the updated content
+    });
+}
+
+// Execute when DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
     const userId = getUserIdFromPath();
     if (userId) {
         fetchNotes(userId);
-        document.getElementById('addNoteBtn').addEventListener('click', function() {
-            addNote(userId);
-        });
     } else {
         console.error('No userId found in URL path');
-        // 可以在这里处理错误，如重定向到登录页面或显示错误信息
     }
 });
+
+
 
