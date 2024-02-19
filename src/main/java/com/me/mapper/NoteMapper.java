@@ -1,6 +1,6 @@
 package com.me.mapper;
 
-import com.me.Entity.Note;
+import com.me.entity.Note;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

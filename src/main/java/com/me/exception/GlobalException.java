@@ -1,6 +1,6 @@
 package com.me.exception;
 
-import com.me.Entity.Result;
+import com.me.entity.Result;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice

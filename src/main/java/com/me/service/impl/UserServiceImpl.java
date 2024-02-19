@@ -1,6 +1,6 @@
 package com.me.service.impl;
 
-import com.me.Entity.User;
+import com.me.entity.User;
 import com.me.mapper.NoteMapper;
 import com.me.mapper.UserMapper;
 import com.me.service.UserService;

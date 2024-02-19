@@ -1,7 +1,7 @@
 package com.me.controller;
 
-import com.me.Entity.Note;
-import com.me.Entity.Result;
+import com.me.entity.Note;
+import com.me.entity.Result;
 import com.me.service.NoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

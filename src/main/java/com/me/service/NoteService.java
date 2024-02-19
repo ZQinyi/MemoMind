@@ -1,6 +1,6 @@
 package com.me.service;
 
-import com.me.Entity.Note;
+import com.me.entity.Note;
 
 import java.util.List;
 

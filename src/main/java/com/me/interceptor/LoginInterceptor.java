@@ -1,7 +1,7 @@
 package com.me.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import com.me.Entity.Result;
+import com.me.entity.Result;
 import com.me.utils.JwtUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
