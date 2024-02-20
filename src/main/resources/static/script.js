@@ -18,7 +18,7 @@ function getUserIdFromPath() {
 
 // Fetch and display notes for the user
 function fetchNotes(userId) {
-    fetch(`http://localhost:8080/${userId}/notes`)
+    fetch(`/api/${userId}/notes`)
         .then(response => response.json())
         .then(result => {
             const sidebar = document.getElementById('sidebar');
@@ -57,7 +57,7 @@ function addNote(userId) {
         content: "Note content here..."
     };
 
-    fetch(`http://localhost:8080/${userId}/notes`, {
+    fetch(`/api/${userId}/notes`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ function addNote(userId) {
 
 // Delete a note
 function deleteNote(noteId, userId) {
-    fetch(`http://localhost:8080/${userId}/notes/${noteId}`, {
+    fetch(`/api/${userId}/notes/${noteId}`, {
         method: 'DELETE'
     }).then(() => {
         fetchNotes(userId); // Reload notes after deleting
@@ -86,7 +86,7 @@ function autoSave(noteId, userId) {
 
 // Save changes to a note
 function saveNoteChanges(noteId, userId, title, content) {
-    fetch(`http://localhost:8080/${userId}/notes`, {
+    fetch(`/api/${userId}/notes`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

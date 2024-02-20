@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const userId = parseJwt(data.data).id;
 
                     // 跳转到对应的用户笔记页面
-                    window.location.href = `/${userId}`;
+                    window.location.href = `/${userId}/notes`;
                 } else {
                     errorMessageDiv.textContent = 'Login failed: ' + (data.msg || 'Invalid Username or Password');
                     errorMessageDiv.style.display = 'block';
@@ -55,5 +55,3 @@ function parseJwt(token) {
 
     return JSON.parse(jsonPayload);
 }
-
-

@@ -18,7 +18,7 @@ public class NoteController {
     private NoteService noteService;
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/{userId}/notes", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/{userId}/notes", method = RequestMethod.GET)
     public Result list(@PathVariable Integer userId) {
         log.info("Get Notes by UserId");
         List<Note> noteList = noteService.showNotes(userId);
@@ -26,7 +26,7 @@ public class NoteController {
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping("/{userId}/notes/{noteId}")
+    @DeleteMapping("/api/{userId}/notes/{noteId}")
     public Result deleteNote(@PathVariable Integer noteId) {
         log.info("delete note id: {}", noteId);
         noteService.deletenote(noteId);
@@ -44,7 +44,7 @@ public class NoteController {
     */
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/{userId}/notes")
+    @PostMapping("/api/{userId}/notes")
     public Result addNote(@PathVariable Integer userId) {
         log.info("{} adds a new note", userId);
         noteService.addNote(userId);
@@ -52,7 +52,7 @@ public class NoteController {
     }
 
     @CrossOrigin(origins = "*")
-    @PutMapping("/{userId}/notes")
+    @PutMapping("/api/{userId}/notes")
     public Result updateNote(@RequestBody Note note) {
         log.info("Updates the note {}", note);
         noteService.updateNote(note);

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class RenderController {
-    @GetMapping("/{userId}")
+    @GetMapping("/{userId}/notes")
     public String getUserNotes(@PathVariable("userId") String userId, Model model) {
         model.addAttribute("title", "Notes");
         model.addAttribute("userId", userId);

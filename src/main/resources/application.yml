@@ -1,9 +1,13 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/sse
-    username: postgres
-    password: 051099
-    driver-class-name: org.postgresql.Driver
+    # url: jdbc:postgresql://localhost:5432/sse
+    # username: postgres
+    # password: 051099
+    # driver-class-name: org.postgresql.Driver
+    url: jdbc:sqlserver://mltutorsqlserver.database.windows.net:1433;databaseName=mltutor
+    username: mltutor
+    password: ml123123!
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   jpa:
     show-sql: true

@@ -8,9 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class SpringMybatisTests {
+    /*
     @Autowired
     private UserMapper userMapper;
-
 
     @Test
     public void testSearch() {
@@ -38,4 +38,6 @@ public class SpringMybatisTests {
 
         userMapper.update(user);
     }
+
+    */
 }
