@@ -28,6 +28,8 @@ public class LoginController {
         log.info("User login: {}", user);
         User u = userService.login(user);
 
+        System.out.println(user);
+
         // login success, generate token
         if (u != null) {
             Map<String, Object> claims = new HashMap<>();
