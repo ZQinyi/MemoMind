@@ -20,4 +20,12 @@ public class RenderController {
         model.addAttribute("title", "login");
         return "login";
     }
+
+    @GetMapping("/{userId}/pending")
+    public String pending(@PathVariable("userId") String userId, Model model) {
+        model.addAttribute("title", "pending");
+        model.addAttribute("userId", userId);
+        return "pendings";
+    }
+
 }

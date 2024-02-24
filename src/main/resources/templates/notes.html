@@ -8,7 +8,10 @@
 <body>
 <div class="app-container">
     <div class="sidebar" id="sidebar">
-        <!-- Sidebar header is fine as is -->
+        <!-- Sidebar header -->
+        <div class="sidebar-header">
+            <button id="addNoteBtn">+</button>
+        </div>
     </div>
     <div class="main-content" id="content">Select a note to view its content.</div>
     <div id="memoApp" th:data-userid="${userId}"></div>

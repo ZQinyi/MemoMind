@@ -17,10 +17,22 @@ public interface NoteMapper {
     @Insert("INSERT INTO notes (user_id) VALUES (#{userId})")
     public void insert(Integer userId);
 
-    // @Update("UPDATE notes SET title = #{title}, content = #{content} WHERE id = #{id}")
+    //@Update("UPDATE notes SET title = #{title}, content = #{content} WHERE id = #{id}")
     public void update(Note note);
 
-    @Select("SELECT * FROM notes WHERE user_id = #{userId} ORDER BY updated_at desc")
+    @Select("<script>" +
+            "SELECT * FROM notes WHERE user_id = #{userId} " +
+            "UNION " +
+            "SELECT n.* FROM notes n JOIN collaborators c ON n.id = c.note_id WHERE c.user_id = #{userId} " +
+            "ORDER BY updated_at DESC" +
+            "</script>")
     public List<Note> searchNotes(Integer userId);
+
+
+    @Select("SELECT COUNT(*) > 0 FROM notes WHERE id = #{noteId} AND user_id = #{userId}")
+    public boolean isOwnerOrHasPermission(Integer noteId, Integer userId);
+
+    @Select("SELECT * FROM notes WHERE id = #{noteId}")
+    public Note findByNoteId(Integer noteId);
 
 }

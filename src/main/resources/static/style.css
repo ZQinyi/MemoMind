@@ -91,20 +91,31 @@ body, html {
 }
 
 #addNoteBtn {
-    cursor: pointer;
-    background-color: #6e7477; /* Green */
-    color: white;
+    background-color: rgb(76, 175, 80);
     border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-size: 24px;
-    line-height: 30px; /* Center "+" vertically */
-    margin-left: auto; /* Push the button to the right */
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    box-shadow: 0 2px #999;
 }
 
 #addNoteBtn:hover {
-    background-color: #45a049;
+    background-color: #3a7c3c;
+    box-shadow: 0 4px #666;
+    transform: translateY(-2px);
+}
+
+#addNoteBtn:active {
+    background-color: #3e8e41;
+    box-shadow: 0 1px #666;
+    transform: translateY(2px);
 }
 
 .note-item {
@@ -143,4 +154,33 @@ body, html {
     font-weight: bold;
     font-size: 24px;
     margin-bottom: 20px;
+}
+
+#pendingListsBtn {
+    background-color: rgb(76, 175, 80);
+    border: none;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    box-shadow: 0 2px #999;
+    margin-left: 20%;
+}
+
+#pendingListsBtn:hover {
+    background-color: #3a7c3c;
+    box-shadow: 0 4px #666;
+    transform: translateY(-2px);
+}
+
+#pendingListsBtn:active {
+    background-color: #3e8e41;
+    box-shadow: 0 1px #666;
+    transform: translateY(2px);
 }

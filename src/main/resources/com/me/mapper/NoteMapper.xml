@@ -7,7 +7,7 @@
         update notes
         <set>
             <if test="userId != null and userId != ''">
-                userId = #{userId},
+                user_id = #{userId},
             </if>
             <if test="title != null and title != ''">
                 title = #{title},
@@ -15,7 +15,7 @@
             <if test="content != null and content != ''">
                 content = #{content},
             </if>
-            updated_at = GETDATE()
+            updated_at = NOW()
         </set>
         where id = #{id}
     </update>

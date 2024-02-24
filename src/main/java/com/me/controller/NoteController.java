@@ -25,11 +25,12 @@ public class NoteController {
         return Result.success(noteList);
     }
 
+
     @CrossOrigin(origins = "*")
     @DeleteMapping("/api/{userId}/notes/{noteId}")
-    public Result deleteNote(@PathVariable Integer noteId) {
-        log.info("delete note id: {}", noteId);
-        noteService.deletenote(noteId);
+    public Result deleteNote(@PathVariable Integer noteId, @PathVariable Integer userId) {
+        log.info("{} delete note id: {}", userId, noteId);
+        noteService.deletenote(noteId, userId);
         return Result.success();
     }
 

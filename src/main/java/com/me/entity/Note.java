@@ -17,6 +17,8 @@ public class Note {
 
     private String title;
     private String content;
+    private Integer version;
+    private Boolean isPublic;
 
     private OffsetDateTime createdAt = OffsetDateTime.now();
     private OffsetDateTime updatedAt = OffsetDateTime.now();
