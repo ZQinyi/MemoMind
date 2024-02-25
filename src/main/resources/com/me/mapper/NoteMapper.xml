@@ -6,9 +6,6 @@
     <update id="update">
         update notes
         <set>
-            <if test="userId != null and userId != ''">
-                user_id = #{userId},
-            </if>
             <if test="title != null and title != ''">
                 title = #{title},
             </if>

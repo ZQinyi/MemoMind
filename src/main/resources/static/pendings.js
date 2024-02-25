@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const invitationDiv = document.createElement('div');
                     invitationDiv.className = 'invitation-card';
                     invitationDiv.innerHTML = `
-                        <p>Invitation from user ${invitation.inviterId} for note ${invitation.noteId}</p>
+                        <p>Invitation from userId:${invitation.inviterId} for noteId:${invitation.noteId}</p>
                         <button class="accept" onclick="handleInvitation(${invitation.invitationId}, true)">Accept</button>
                         <button class="decline" onclick="handleInvitation(${invitation.invitationId}, false)">Decline</button>
                     `;

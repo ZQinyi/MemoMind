@@ -18,7 +18,7 @@ public class NoteController {
     private NoteService noteService;
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/api/{userId}/notes", method = RequestMethod.GET)
+    @GetMapping("/api/{userId}/notes")
     public Result list(@PathVariable Integer userId) {
         log.info("Get Notes by UserId");
         List<Note> noteList = noteService.showNotes(userId);
@@ -33,16 +33,6 @@ public class NoteController {
         noteService.deletenote(noteId, userId);
         return Result.success();
     }
-
-    /*
-    @CrossOrigin(origins = "*")
-    @PostMapping("/notes")
-    public Result add(@RequestBody Note note) {
-        log.info("add a new note", note);
-        noteService.addNote(note);
-        return Result.success();
-    }
-    */
 
     @CrossOrigin(origins = "*")
     @PostMapping("/api/{userId}/notes")

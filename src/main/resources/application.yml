@@ -4,10 +4,10 @@ spring:
     username: postgres
     password: 051099
     driver-class-name: org.postgresql.Driver
-    # url: jdbc:sqlserver://mltutorsqlserver.database.windows.net:1433;databaseName=mltutor
-    # username: mltutor
-    # password: ml123123!
-    # driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    #url: jdbc:sqlserver://aitutour.database.windows.net:1433;databaseName=ssegroup
+    #username: sse
+    #password: 1234567890Q!
+    #driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   jpa:
     show-sql: true
