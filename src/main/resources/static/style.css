@@ -136,11 +136,12 @@ body, html {
     margin-left: 5px;
 }
 
-.editable {
+.editContent {
     border: none;
     background-color: transparent;
     outline: none;
     width: 100%;
+    height: 90%;
     font-size: 16px;
 }
 

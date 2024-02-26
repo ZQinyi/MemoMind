@@ -13,4 +13,6 @@ public interface NoteService {
 
     void updateNote(Note note);
 
+    Note findNote(Integer noteId);
+
 }

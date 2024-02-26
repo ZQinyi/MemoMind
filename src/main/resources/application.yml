@@ -1,13 +1,26 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/sse
-    username: postgres
-    password: 051099
+    #url: jdbc:postgresql://localhost:5432/sse
+    #username: postgres
+    #password: 051099
+    #driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://aitutour.postgres.database.azure.com:5432/aitutour?sslmode=require
+    username: sse
+    password: 1234567890Q!
     driver-class-name: org.postgresql.Driver
-    #url: jdbc:sqlserver://aitutour.database.windows.net:1433;databaseName=ssegroup
-    #username: sse
-    #password: 1234567890Q!
-    #driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  data:
+    redis:
+      database: 0
+      host: localhost
+      port: 6379
+
+  rabbitmq:
+    host: 20.90.119.245
+    port: 5672
+    username: guest
+    password: guest
+
 
   jpa:
     show-sql: true
@@ -16,6 +29,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+
+  sql:
+    init:
+      platform: postgres
 
   # max file size for uploading
   servlet:

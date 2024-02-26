@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.code === 1 && data.data.length > 0) {
                 data.data.forEach(invitation => {
-                    // 创建邀请显示的元素并应用样式
                     const invitationDiv = document.createElement('div');
                     invitationDiv.className = 'invitation-card';
                     invitationDiv.innerHTML = `
@@ -15,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <button class="decline" onclick="handleInvitation(${invitation.invitationId}, false)">Decline</button>
                     `;
 
-                    // 添加到body或其他容器中
                     document.body.appendChild(invitationDiv);
                 });
             } else {
@@ -23,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 noInvitationDiv.textContent = 'No pending invitations.';
                 document.body.appendChild(noInvitationDiv);
 
-                // 创建返回按钮
+                // BACK button
                 const backButton = document.createElement('button');
                 backButton.textContent = 'BACK';
                 backButton.className = 'back-button';
@@ -31,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     window.location.href = `/${userId}/notes`;
                 };
 
-                // 添加按钮到页面
                 document.body.appendChild(backButton);
             }
         })

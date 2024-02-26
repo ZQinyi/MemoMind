@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Note {
+public class Note implements Serializable {
 
     private Integer id;
     private Integer userId;

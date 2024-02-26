@@ -13,7 +13,6 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                // 允许所有源访问所有路径
                 registry.addMapping("/**").allowedOrigins("*");
             }
         };

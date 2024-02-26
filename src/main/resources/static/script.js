@@ -37,39 +37,47 @@ function fetchNotes(userId) {
                     <span class="note-title" data-id="${note.id}">${note.title}</span>
                 `;
                 sidebar.appendChild(noteElement);
-
-                // 应用防抖动功能以自动保存
-                noteElement.querySelector('.note-title').addEventListener('click', function() {
-                    const contentArea = document.getElementById('content');
-                    contentArea.innerHTML = `
-                        <input id="editTitle" class="editTitle" value="${note.title}" />
-                        <textarea id="editContent" class="editable">${note.content}</textarea>
-                        <div>
-                            <input type="text" id="inviteeId" placeholder="Enter the inviteeId" />
-                            <button id="sendInvitationBtn">SEND</button>
-                        </div>
-                    `;
-                    document.getElementById('editTitle').addEventListener('input', debounce(() => autoSave(note.id, userId), 2000));
-                    document.getElementById('editContent').addEventListener('input', debounce(() => autoSave(note.id, userId), 2000));
-                    document.getElementById('sendInvitationBtn').addEventListener('click', () => {
-                        const inviteeId = document.getElementById('inviteeId').value;
-                        sendInvitation(note.id, userId, inviteeId);
-                    });
-                });
+                noteElement.querySelector('.note-title').addEventListener('click', () => fetchNoteDetails(note.id, userId));
             });
-
-            const addNoteBtn = document.getElementById('addNoteBtn');
-            addNoteBtn.addEventListener('click', () => addNote(userId));
-
-
-            const pendingListsBtn = document.getElementById('pendingListsBtn');
-            pendingListsBtn.addEventListener('click', function() {
-                window.location.href = `/${userId}/pending`; //
-            });
-
+            document.getElementById('addNoteBtn').addEventListener('click', () => addNote(userId));
+            document.getElementById('pendingListsBtn').addEventListener('click', () => window.location.href = `/${userId}/pending`);
 
         });
 }
+
+function fetchNoteDetails(noteId, userId) {
+    fetch(`/api/${userId}/notes/${noteId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(response => {
+            const noteDetails = response.data;
+            const contentArea = document.getElementById('content');
+            // 使用noteDetails更新内容区域
+            contentArea.innerHTML = `
+                <input id="editTitle" class="editTitle" value="${noteDetails.title}" />
+                <textarea id="editContent" class="editContent">${noteDetails.content}</textarea>
+                <div>
+                    <input type="text" id="inviteeId" placeholder="Enter the InviteeID" />
+                    <button id="sendInvitationBtn">SEND</button>
+                </div>
+            `;
+
+            document.getElementById('editTitle').addEventListener('input', debounce(() => autoSave(noteDetails.id, userId), 2000));
+            document.getElementById('editContent').addEventListener('input', debounce(() => autoSave(noteDetails.id, userId), 2000));
+            document.getElementById('sendInvitationBtn').addEventListener('click', () => {
+                const inviteeId = document.getElementById('inviteeId').value;
+                sendInvitation(noteDetails.id, userId, inviteeId);
+            });
+        })
+        .catch(error => {
+            console.error('Failed to fetch note details:', error);
+        });
+}
+
 
 function sendInvitation(noteId, userId, inviteeId) {
     if (!inviteeId) {
@@ -127,10 +135,25 @@ function addNote(userId) {
 function deleteNote(noteId, userId) {
     fetch(`/api/${userId}/notes/${noteId}`, {
         method: 'DELETE'
-    }).then(() => {
-        fetchNotes(userId); // Reload notes after deleting
-    });
+    })
+        .then(response => {
+            if (response.status === 403) {
+                alert("Sorry! Only the creator of the Note has the right to delete the Note!");
+                throw new Error('Forbidden: You do not have permission');
+            }
+            if (!response.ok) {
+                throw new Error('An error occurred while deleting the memo');
+            }
+            return response.json();
+        })
+        .then(() => {
+            fetchNotes(userId);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
+
 
 // Auto-save note changes
 function autoSave(noteId, userId) {

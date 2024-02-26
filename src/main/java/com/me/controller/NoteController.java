@@ -25,6 +25,13 @@ public class NoteController {
         return Result.success(noteList);
     }
 
+    @CrossOrigin(origins = "*")
+    @GetMapping("/api/{userId}/notes/{noteId}")
+    public Result getNote(@PathVariable Integer noteId) {
+        log.info("Get Notes by noteId:{}", noteId);
+        Note note = noteService.findNote(noteId);
+        return Result.success(note);
+    }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/api/{userId}/notes/{noteId}")
