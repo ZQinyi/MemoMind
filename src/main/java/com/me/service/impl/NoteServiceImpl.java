@@ -4,7 +4,7 @@ import com.me.entity.Note;
 import com.me.exception.UnauthorizedException;
 import com.me.mapper.NoteMapper;
 import com.me.service.NoteService;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+// import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -22,8 +22,10 @@ public class NoteServiceImpl implements NoteService {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+    /*
     @Autowired
     private RabbitTemplate rabbitTemplate;
+    */
 
     @Override
     public void addNote(Integer userId) { noteMapper.insert(userId); }

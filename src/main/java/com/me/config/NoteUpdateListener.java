@@ -1,8 +1,9 @@
+/*
 package com.me.config;
 
 import com.me.entity.Note;
 import com.me.mapper.NoteMapper;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+// import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -28,3 +29,5 @@ public class NoteUpdateListener {
         noteMapper.delete(noteId);
     }
 }
+
+ */
