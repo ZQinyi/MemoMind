@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.getUP(user);
     }
 
-    @Transactional(rollbackOn = Exception.class) // appear all exceptions will rollback
+    @Transactional(rollbackOn = Exception.class) // Appear all exceptions will rollback
     @Override
     public void delete(Integer id) {
         userMapper.delete(id);

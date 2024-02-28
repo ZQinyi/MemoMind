@@ -1,6 +1,5 @@
 package com.me.service;
 
-
 import com.me.entity.User;
 
 public interface UserService {

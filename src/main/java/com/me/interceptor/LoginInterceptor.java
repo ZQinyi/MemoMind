@@ -33,7 +33,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         // 4. Determine token is existed or not, if not, return error msg
         if (!StringUtils.hasLength(jwt)) {
             log.info("Error! Token is empty!");
-            Result error = Result.error("NOT_LOGIN_wawawa");
+            Result error = Result.error("NOT_LOGIN");
             String notLogin = JSONObject.toJSONString(error);
             resp.getWriter().write(notLogin);
             return false;

@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 
+// Replacement of Interceptor
 @Slf4j
 // @WebFilter(urlPatterns = "/*")
 public class LoginFilter implements Filter {

@@ -11,22 +11,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<Result> handleUnauthorizedException(UnauthorizedException ex) {
-        // 打印堆栈跟踪，帮助调试
         ex.printStackTrace();
 
-        // 创建并返回一个包含错误信息的Result对象
         Result result = Result.error("Access Denied: " + ex.getMessage());
         return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Result> handleGeneralException(Exception ex) {
-        // 打印堆栈跟踪，帮助调试
+        // Print stack traces for debugging
         ex.printStackTrace();
 
-        // 创建并返回一个包含错误信息的Result对象
+        // Creates and returns a Result object containing an error message
         Result result = Result.error("Failed, please contact the manager");
         return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }
 

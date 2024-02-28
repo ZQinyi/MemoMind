@@ -1,3 +1,5 @@
+const jwtToken = sessionStorage.getItem('token');
+
 // Debounce function to prevent excessive executions
 function debounce(func, wait) {
     let timeout;
@@ -18,7 +20,13 @@ function getUserIdFromPath() {
 
 // Fetch and display notes for the user
 function fetchNotes(userId) {
-    fetch(`/api/${userId}/notes`)
+    fetch(`/api/${userId}/notes`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': jwtToken,
+        }
+    })
         .then(response => response.json())
         .then(result => {
             const sidebar = document.getElementById('sidebar');
@@ -40,13 +48,37 @@ function fetchNotes(userId) {
                 noteElement.querySelector('.note-title').addEventListener('click', () => fetchNoteDetails(note.id, userId));
             });
             document.getElementById('addNoteBtn').addEventListener('click', () => addNote(userId));
-            document.getElementById('pendingListsBtn').addEventListener('click', () => window.location.href = `/${userId}/pending`);
+            document.getElementById('pendingListsBtn').addEventListener('click', () => jumpToPending(userId));
 
         });
 }
 
+function jumpToPending(userId) {
+    fetch(`/${userId}/pending`, {
+        method: 'GET',
+        headers: {
+            'token': jwtToken,
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = `/${userId}/pending`;
+            } else {
+                console.error('Access denied');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
 function fetchNoteDetails(noteId, userId) {
-    fetch(`/api/${userId}/notes/${noteId}`)
+    fetch(`/api/${userId}/notes/${noteId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': jwtToken,
+        }
+    })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -56,7 +88,7 @@ function fetchNoteDetails(noteId, userId) {
         .then(response => {
             const noteDetails = response.data;
             const contentArea = document.getElementById('content');
-            // 使用noteDetails更新内容区域
+
             contentArea.innerHTML = `
                 <input id="editTitle" class="editTitle" value="${noteDetails.title}" />
                 <textarea id="editContent" class="editContent">${noteDetails.content}</textarea>
@@ -90,6 +122,7 @@ function sendInvitation(noteId, userId, inviteeId) {
         method: 'PUT', // Ensure the HTTP method matches your backend requirements
         headers: {
             'Content-Type': 'application/json',
+            'token': jwtToken,
         },
         body: JSON.stringify({
             noteId: noteId, // Include the noteId in the request
@@ -124,6 +157,7 @@ function addNote(userId) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'token': jwtToken,
         },
         body: JSON.stringify(defaultNote)
     }).then(() => {
@@ -134,7 +168,11 @@ function addNote(userId) {
 // Delete a note
 function deleteNote(noteId, userId) {
     fetch(`/api/${userId}/notes/${noteId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': jwtToken,
+        },
     })
         .then(response => {
             if (response.status === 403) {
@@ -171,6 +209,7 @@ function saveNoteChanges(noteId, userId, title, content) {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
+            'token': jwtToken,
         },
         body: JSON.stringify({ id: noteId, userId: userId, title: title, content: content, version: version, isPublic: isPublic })
     }).then(() => {

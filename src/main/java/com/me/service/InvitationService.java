@@ -1,8 +1,6 @@
 package com.me.service;
 
-import com.me.entity.Collaborator;
 import com.me.entity.Invitation;
-
 import java.util.List;
 
 public interface InvitationService {

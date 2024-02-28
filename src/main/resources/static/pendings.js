@@ -1,7 +1,14 @@
+const jwtToken = sessionStorage.getItem('token');
 document.addEventListener('DOMContentLoaded', function() {
     const userId = document.getElementById('memoApp').getAttribute('data-userid');
 
-    fetch(`/api/${userId}/pending`)
+    fetch(`/api/${userId}/pending`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': jwtToken,
+        }
+    })
         .then(response => response.json())
         .then(data => {
             if (data.code === 1 && data.data.length > 0) {
@@ -43,7 +50,7 @@ function handleInvitation(invitationId, accept) {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            // 可能需要添加其他headers，如认证令牌
+            'token': jwtToken,
         },
         body: JSON.stringify({})
     })

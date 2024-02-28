@@ -1,7 +1,6 @@
 package com.me.service;
 
 import com.me.entity.Note;
-
 import java.util.List;
 
 public interface NoteService {

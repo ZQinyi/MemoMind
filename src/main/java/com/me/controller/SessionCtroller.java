@@ -46,4 +46,5 @@ public class SessionCtroller {
         log.info("loginUser: {}", loginUser);
         return Result.success(loginUser);
     }
+
 }
