@@ -1,4 +1,20 @@
 const jwtToken = sessionStorage.getItem('token');
+if (!jwtToken) {
+    alert('Please log in to view your Memos.');
+    window.location.href = '/login';
+} else {
+    const base64Url = jwtToken.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const payload = JSON.parse(window.atob(base64));
+    const JWTuserId = payload.id;
+
+    const userId = getUserIdFromPath();
+
+    if (JWTuserId != userId) {
+        alert('Please log in to view your Memos.');
+        window.location.href = '/login';
+    }
+}
 
 // Debounce function to prevent excessive executions
 function debounce(func, wait) {
@@ -48,28 +64,9 @@ function fetchNotes(userId) {
                 noteElement.querySelector('.note-title').addEventListener('click', () => fetchNoteDetails(note.id, userId));
             });
             document.getElementById('addNoteBtn').addEventListener('click', () => addNote(userId));
-            document.getElementById('pendingListsBtn').addEventListener('click', () => jumpToPending(userId));
-
+            document.getElementById('pendingListsBtn').addEventListener('click', () => window.location.href = `/${userId}/pending`);
         });
 }
-
-function jumpToPending(userId) {
-    fetch(`/${userId}/pending`, {
-        method: 'GET',
-        headers: {
-            'token': jwtToken,
-        }
-    })
-        .then(response => {
-            if (response.ok) {
-                window.location.href = `/${userId}/pending`;
-            } else {
-                console.error('Access denied');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
-
 
 function fetchNoteDetails(noteId, userId) {
     fetch(`/api/${userId}/notes/${noteId}`, {
@@ -109,7 +106,6 @@ function fetchNoteDetails(noteId, userId) {
             console.error('Failed to fetch note details:', error);
         });
 }
-
 
 function sendInvitation(noteId, userId, inviteeId) {
     if (!inviteeId) {
@@ -191,7 +187,6 @@ function deleteNote(noteId, userId) {
             console.error('Error:', error);
         });
 }
-
 
 // Auto-save note changes
 function autoSave(noteId, userId) {

@@ -1,4 +1,21 @@
 const jwtToken = sessionStorage.getItem('token');
+if (!jwtToken) {
+    alert('Please log in to view your Pendings.');
+    window.location.href = '/login';
+} else {
+    const base64Url = jwtToken.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const payload = JSON.parse(window.atob(base64));
+    const JWTuserId = payload.id;
+
+    const userId = getUserIdFromPath();
+
+    if (JWTuserId != userId) {
+        alert('Please log in to view your Pendings.');
+        window.location.href = '/login';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const userId = document.getElementById('memoApp').getAttribute('data-userid');
 
@@ -65,15 +82,3 @@ function handleInvitation(invitationId, accept) {
         })
         .catch(error => console.error(`Error ${action}ing invitation:`, error));
 }
-
-
-
-
-
-
-
-
-
-
-
-
