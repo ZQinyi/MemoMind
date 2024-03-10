@@ -1,5 +1,6 @@
 package com.me.controller;
 
+import com.me.anno.Log;
 import com.me.entity.Note;
 import com.me.entity.Result;
 import com.me.service.NoteService;
@@ -34,6 +35,7 @@ public class NoteController {
     }
 
     @CrossOrigin(origins = "*")
+    @Log
     @DeleteMapping("/api/{userId}/notes/{noteId}")
     public Result deleteNote(@PathVariable Integer noteId, @PathVariable Integer userId) {
         log.info("{} delete note id: {}", userId, noteId);
@@ -42,6 +44,7 @@ public class NoteController {
     }
 
     @CrossOrigin(origins = "*")
+    @Log
     @PostMapping("/api/{userId}/notes")
     public Result addNote(@PathVariable Integer userId) {
         log.info("{} adds a new note", userId);
@@ -50,6 +53,7 @@ public class NoteController {
     }
 
     @CrossOrigin(origins = "*")
+    @Log
     @PutMapping("/api/{userId}/notes")
     public Result updateNote(@RequestBody Note note) {
         log.info("Updates the note {}", note);

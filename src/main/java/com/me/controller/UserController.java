@@ -1,5 +1,6 @@
 package com.me.controller;
 
+import com.me.anno.Log;
 import com.me.entity.Result;
 import com.me.entity.User;
 import com.me.service.UserService;
@@ -15,6 +16,7 @@ public class UserController {
     private UserService userService;
 
     @CrossOrigin(origins = "*")
+    @Log
     @DeleteMapping("/{userId}")
     public Result delete(@PathVariable Integer userId) {
         log.info("delete a user: {}", userId);
@@ -23,6 +25,7 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*")
+    @Log
     @PostMapping("/user")
     public Result insert(@RequestBody User user) {
         log.info("add a user: {}", user);
