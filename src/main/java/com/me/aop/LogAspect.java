@@ -2,7 +2,7 @@ package com.me.aop;
 
 import com.alibaba.fastjson.JSONObject;
 import com.me.mapper.OperateLogMapper;
-import com.me.pojo.OperateLog;
+import com.me.entity.OperateLog;
 import com.me.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,15 +12,13 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Slf4j
 @Component
-@Aspect
+@Aspect  // AOP类
 public class LogAspect {
 
     @Autowired
@@ -46,6 +44,7 @@ public class LogAspect {
         String methodParams = Arrays.toString(args);
 
         long begin = System.currentTimeMillis();
+
         Object result = joinPoint.proceed();
 
         long end = System.currentTimeMillis();
@@ -55,10 +54,11 @@ public class LogAspect {
         Long costTime = end - begin;
 
         OperateLog operateLog = new OperateLog(null, operateUser, operateTime, className, methodName, methodParams, returnValue, costTime);
+
         operateLogMapper.insert(operateLog);
 
         log.info("AOP record operate Log: {}", operateLog);
-        return result;
 
+        return result;
     }
 }

@@ -1,4 +1,4 @@
-package com.me.pojo;
+package com.me.entity;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
@@ -19,5 +19,4 @@ public class OperateLog {
     private String methodParams;
     private String returnValue;
     private Long costTime;
-
 }

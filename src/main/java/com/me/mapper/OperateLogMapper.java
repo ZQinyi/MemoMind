@@ -1,7 +1,7 @@
 package com.me.mapper;
 
 
-import com.me.pojo.OperateLog;
+import com.me.entity.OperateLog;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
