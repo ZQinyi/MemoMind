@@ -23,6 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/{userId}/notes",
                         "/{userId}/pending"
                 );
+
     }
 
     // 通过这个方法让 Spring 可以加载静态资源

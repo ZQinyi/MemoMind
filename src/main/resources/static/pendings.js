@@ -11,9 +11,15 @@ if (!jwtToken) {
     const userId = getUserIdFromPath();
 
     if (JWTuserId != userId) {
-        alert('Please log in to view your Pendings.');
+        alert('Please log in to view your Memos.');
         window.location.href = '/login';
     }
+}
+
+function getUserIdFromPath() {
+    const userId = document.getElementById('memoApp').getAttribute('data-userid');
+    console.log("Fetched userId:", userId); // Debug output
+    return userId;
 }
 
 document.addEventListener('DOMContentLoaded', function() {

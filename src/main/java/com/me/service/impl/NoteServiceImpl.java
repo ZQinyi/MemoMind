@@ -5,6 +5,7 @@ import com.me.exception.UnauthorizedException;
 import com.me.mapper.NoteMapper;
 import com.me.service.NoteService;
 // import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-
 @Service
 public class NoteServiceImpl implements NoteService {
-
-    @Autowired
+     @Autowired
     private NoteMapper noteMapper;
 
     @Autowired
@@ -44,6 +43,7 @@ public class NoteServiceImpl implements NoteService {
         }
     }
 
+    @Transactional
     @Override
     public void deletenote(Integer noteId, Integer userId) {
         Note note = noteMapper.findByNoteId(noteId);
@@ -61,6 +61,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    @Transactional
     public void updateNote(Note note) {
         String cacheKey = "note:" + note.getId();
         redisTemplate.opsForValue().set(cacheKey, note);
@@ -73,5 +74,4 @@ public class NoteServiceImpl implements NoteService {
         List<Note> notes = noteMapper.searchNotes(userId);
         return notes;
     }
-
 }
