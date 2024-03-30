@@ -60,5 +60,4 @@ public class NoteController {
         noteService.updateNote(note);
         return Result.success();
     }
-
 }

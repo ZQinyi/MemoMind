@@ -1,0 +1,19 @@
+{
+  "name": "me",
+  "version": "1.0.0",
+  "description": "MemoMind... Please memorize your minds here...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "quill": "^1.3.4",
+    "vue": "^3.4.21",
+    "y-quill": "^0.1.5",
+    "y-webrtc": "^10.3.0",
+    "yjs": "^13.6.14"
+  }
+}
