@@ -27,7 +27,7 @@ public class NoteController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/api/{userId}/notes/{noteId}")
+    @GetMapping("/api/notes/{noteId}")
     public Result getNote(@PathVariable Integer noteId) {
         log.info("Get Notes by noteId:{}", noteId);
         Note note = noteService.findNote(noteId);
@@ -54,7 +54,7 @@ public class NoteController {
 
     @CrossOrigin(origins = "*")
     @Log
-    @PutMapping("/api/{userId}/notes")
+    @PutMapping("/api/notes")
     public Result updateNote(@RequestBody Note note) {
         log.info("Updates the note {}", note);
         noteService.updateNote(note);

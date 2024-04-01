@@ -33,7 +33,7 @@ public class InvatationController {
     }
 
     @CrossOrigin(origins = "*")
-    @PutMapping("/api/invitations/accept/{invitationId}")
+    @PutMapping("/api/invitations/Accept/{invitationId}")
     public Result acceptInvitations(@PathVariable Long invitationId) {
         log.info("Accept the invitation:{}", invitationId);
         invitationService.acceptInvitation(invitationId);
@@ -41,7 +41,7 @@ public class InvatationController {
     }
 
     @CrossOrigin(origins = "*")
-    @PutMapping("/api/invitations/decline/{invitationId}")
+    @PutMapping("/api/invitations/Decline/{invitationId}")
     public Result declineInvitations(@PathVariable Long invitationId) {
         log.info("Decline the invitation:{}", invitationId);
         invitationService.declineInvitation(invitationId);

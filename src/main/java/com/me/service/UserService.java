@@ -8,4 +8,6 @@ public interface UserService {
     void delete(Integer id);
 
     void insert(User user);
+
+    User getUser(Integer id);
 }

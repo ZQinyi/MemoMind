@@ -33,4 +33,13 @@ public class UserController {
         return Result.success();
     }
 
+    @CrossOrigin(origins = "*")
+    @Log
+    @GetMapping("/api/{userId}")
+    public Result getUser(@PathVariable Integer userId) {
+        log.info("get a user: {}", userId);
+        User user = userService.getUser(userId);
+        return Result.success(user);
+    }
+
 }
