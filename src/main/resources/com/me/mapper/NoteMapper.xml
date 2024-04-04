@@ -12,8 +12,9 @@
             <if test="content != null and content != ''">
                 content = #{content},
             </if>
-            updated_at = NOW()
+            updated_at = NOW(),
+            version = version + 1
         </set>
-        where id = #{id}
+        where id = #{id} and version = #{version}
     </update>
 </mapper>

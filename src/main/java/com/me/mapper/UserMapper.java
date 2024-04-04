@@ -19,6 +19,9 @@ public interface UserMapper {
     @Select("SELECT * FROM users WHERE id = #{id}")
     User getUser(Integer id);
 
+    @Select("SELECT * FROM users WHERE username = #{username}")
+    User getId(String username);
+
     @Select("SELECT * FROM users WHERE username = #{username} and password = #{password}")
     User getUP(User user); // UP = "username and password"
 }

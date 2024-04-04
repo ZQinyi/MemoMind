@@ -18,7 +18,7 @@ public interface NoteMapper {
     void insert(Integer userId);
 
     //@Update("UPDATE notes SET title = #{title}, content = #{content} WHERE id = #{id}")
-    void update(Note note);
+    boolean update(Note note);
 
     @Select("<script>" +
             "SELECT * FROM notes WHERE user_id = #{userId} " +

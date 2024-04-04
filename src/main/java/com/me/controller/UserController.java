@@ -42,4 +42,15 @@ public class UserController {
         return Result.success(user);
     }
 
+    @CrossOrigin(origins = "*")
+    @Log
+    @GetMapping("/api/{username}")
+    public Result getId(@PathVariable String username) {
+        log.info("get username by id: {}", username);
+        User user = userService.getId(username);
+        return Result.success(user);
+    }
+
+
+
 }

@@ -14,6 +14,7 @@ public class NoteUpdateListener {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+
     @Autowired
     private NoteMapper noteMapper;
 
@@ -25,8 +26,8 @@ public class NoteUpdateListener {
     }
 
     @RabbitListener(queues = "notes.delete")
-    public void NoteDelete(Integer noteId) {
-        noteMapper.delete(noteId);
+    public void NoteDelete(String cacheKey) {
+        redisTemplate.delete(cacheKey);
     }
 }
 

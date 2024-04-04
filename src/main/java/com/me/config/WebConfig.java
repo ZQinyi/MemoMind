@@ -14,19 +14,11 @@ public class WebConfig implements WebMvcConfigurer {
     private LoginInterceptor loginInterceptor;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns(
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js",
-                        "/{userId}/notes",
-                        "/{userId}/pending"
-                );
+        registry.addInterceptor(loginInterceptor).addPathPatterns("/**");
 
     }
 
-    // 通过这个方法让 Spring 可以加载静态资源
+    // 让 Spring 可以加载静态资源
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");

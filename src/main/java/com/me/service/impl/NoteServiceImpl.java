@@ -11,11 +11,13 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 @Service
 public class NoteServiceImpl implements NoteService {
-     @Autowired
+
+    @Autowired
     private NoteMapper noteMapper;
 
     @Autowired
@@ -55,19 +57,22 @@ public class NoteServiceImpl implements NoteService {
         }
 
         String cacheKey = "note:" + noteId;
-        redisTemplate.delete(cacheKey);
-        //rabbitTemplate.convertAndSend("note.delete", noteId);
         noteMapper.delete(noteId);
+        // rabbitTemplate.convertAndSend("note.delete", cacheKey);
+        redisTemplate.delete(cacheKey);
     }
 
     @Override
     @Transactional
     public void updateNote(Note note) {
-        String cacheKey = "note:" + note.getId();
-        redisTemplate.opsForValue().set(cacheKey, note);
-        //rabbitTemplate.convertAndSend("notes.update", note.getId().toString());
-        noteMapper.update(note);
+        if (noteMapper.update(note)) {
+            String cacheKey = "note:" + note.getId();
+            // rabbitTemplate.convertAndSend("note.delete", cacheKey);
+            redisTemplate.delete(cacheKey);
+        }
+
     }
+
 
     @Override
     public List<Note> showNotes(Integer userId) {
