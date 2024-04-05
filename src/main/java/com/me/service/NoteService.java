@@ -1,10 +1,12 @@
 package com.me.service;
 
 import com.me.entity.Note;
+import com.me.entity.SimpleNoteDto;
+
 import java.util.List;
 
 public interface NoteService {
-    List<Note> showNotes(Integer userid);
+    List<SimpleNoteDto> showSimpleNotes(Integer userid);
 
     void deletenote(Integer noteId, Integer userId);
 

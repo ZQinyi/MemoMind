@@ -1,6 +1,7 @@
 package com.me.service.impl;
 
 import com.me.entity.Note;
+import com.me.entity.SimpleNoteDto;
 import com.me.exception.UnauthorizedException;
 import com.me.mapper.NoteMapper;
 import com.me.service.NoteService;
@@ -75,8 +76,8 @@ public class NoteServiceImpl implements NoteService {
 
 
     @Override
-    public List<Note> showNotes(Integer userId) {
-        List<Note> notes = noteMapper.searchNotes(userId);
+    public List<SimpleNoteDto> showSimpleNotes(Integer userId) {
+        List<SimpleNoteDto> notes = noteMapper.searchNotes(userId);
         return notes;
     }
 }

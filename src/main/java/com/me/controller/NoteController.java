@@ -3,6 +3,7 @@ package com.me.controller;
 import com.me.anno.Log;
 import com.me.entity.Note;
 import com.me.entity.Result;
+import com.me.entity.SimpleNoteDto;
 import com.me.service.NoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class NoteController {
     @GetMapping("/api/{userId}/notes")
     public Result list(@PathVariable Integer userId) {
         log.info("Get Notes by UserId");
-        List<Note> noteList = noteService.showNotes(userId);
+        List<SimpleNoteDto> noteList = noteService.showSimpleNotes(userId);
         return Result.success(noteList);
     }
 
